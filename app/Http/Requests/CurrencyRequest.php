@@ -11,7 +11,7 @@ class CurrencyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class CurrencyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name'=>'required|max:50',
+            'description'=>'required|max:150',
+            'amount'=>'required|max:10',
         ];
     }
 }

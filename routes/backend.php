@@ -32,6 +32,8 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
 
     Route::get('dashboard',[HomeController::class,'admin'])->name('admin');
     Route::get('currencies',[CurrencyController::class,'index'])->name('currencies.index');
+    Route::get('currencies/create',[CurrencyController::class,'create'])->name('currencies.create');
+    Route::post('currencies/store',[CurrencyController::class,'store'])->name('currencies.store');
 });
 
 
@@ -42,4 +44,4 @@ Route::middleware('auth:admin')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-// Route::get('/{page}', [PageController::class, 'index']);
+ Route::get('/{page}', [PageController::class, 'index']);

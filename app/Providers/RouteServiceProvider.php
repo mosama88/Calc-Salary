@@ -18,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/dashboard';
-    public const ADMIN = '/admin/dashboard';
+    public const ADMIN = '/';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -39,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/backend.php'));
         });
     }
-    
+
     /**
      * Configure the rate limiters for the application.
      */
