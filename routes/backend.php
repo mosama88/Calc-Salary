@@ -5,6 +5,7 @@
     use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Dashboard\calcNetSalaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,10 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
     Route::put('currencies/update/{id}',[CurrencyController::class,'update'])->name('currencies.update');
     Route::delete('currencies/destroy/{id}',[CurrencyController::class,'destroy'])->name('currencies.destroy');
 
+
+    Route::resource('calcNetSalary',calcNetSalaryController::class);
+
+    
 });
 
 
