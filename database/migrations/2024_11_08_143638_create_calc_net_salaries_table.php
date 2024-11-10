@@ -13,16 +13,15 @@ return new class extends Migration
     {
         Schema::create('calc_net_salaries', function (Blueprint $table) {
             $table->id();
-            $table->integer('number_of_month')->comment('عدد الشهور');
+            $table->integer('number_of_month')->default(12)->comment('عدد الشهور');
             $table->foreignId('currency_id')->references('id')->on('currencies');
-            $table->decimal('salary_month',10,2)->comment('العملة بالمصرى');
-            $table->decimal('total_salary_year',10,2)->comment('العملة بالمصرى');
+            $table->decimal('salary',10,2)->comment('المرتب');
+            $table->decimal('calc_salary_month',10,2)->comment('حساب المرتب بالشهر');
+            $table->decimal('calc_salary_year',10,2)->comment('حساب المرتب بالسنه');
             $table->decimal('monthly_expenses',10,2)->comment('المصاريف الشهرية');
             $table->decimal('annual_requirements',10,2)->comment('المتطلبات السنوية');
             $table->decimal('insurance_amount',10,2)->comment('مبلغ التأمينات');
-            $table->decimal('net_salary',10,2)->comment('صافى المرتب');
-
-
+            $table->decimal('net_salary',10,2)->default(0)->comment('صافى المرتب');
             $table->timestamps();
         });
     }

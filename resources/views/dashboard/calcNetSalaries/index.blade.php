@@ -34,9 +34,14 @@
                         <thead>
                             <tr>
                                 <th style="width: 10px">#</th>
-                                <th>أسم العملة</th>
-                                <th>قيمة العملة</th>
-                                <th>وصف العملة</th>
+                                <th>نوع العملة</th>
+                                <th>المرتب بالعملة</th>
+                                <th>المرتب الشهرى</th>
+                                <th>المرتب السنوى</th>
+                                <th>المصاريف الشهرية</th>
+                                <th>المتطلبات السنوية</th>
+                                <th>التأمينات</th>
+                                <th>صافى المرتب</th>
                                 <th>العمليات</th>
                             </tr>
                         </thead>
@@ -46,9 +51,14 @@
                                 <?php $i++; ?>
                                 <tr>
                                     <td>{{ $i }}</td>
-                                    <td>{{ $info['name'] }}</td>
-                                    <td>{{ $info['description'] }}</td>
-                                    <td>{{ $info['amount'] }}</td>
+                                    <td>{{ $info->currency->description }}</td>
+                                    <td>{{ $info['salary'] * 1 }}</td>
+                                    <td>{{ $info['calc_salary_month'] * 1 }}</td>
+                                    <td>{{ $info['calc_salary_year'] * 1 }}</td>
+                                    <td>{{ $info['monthly_expenses'] * 1 }}</td>
+                                    <td>{{ $info['annual_requirements'] * 1 }}</td>
+                                    <td>{{ $info['insurance_amount'] * 1 }}</td>
+                                    <td>{{ $info['net_salary'] * 1 }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-info">العلميات</button>

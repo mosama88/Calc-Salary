@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Models\CalcNetSalary;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class calcNetSalaryController extends Controller
@@ -24,7 +25,7 @@ class calcNetSalaryController extends Controller
      */
     public function create()
     {
-        $other['currencies'] = Currency::get();
+        $other['currencies'] = Currency::orderBy('id','DESC')->get();
         return view('dashboard.calcNetSalaries.create',['other'=>$other]);
     }
 
@@ -33,7 +34,50 @@ class calcNetSalaryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        try{
+            DB::beginTransaction();
+            
+            $calcNetSalary = new CalcNetSalary();
+            
+            $amount_currency = Currency::where('id',$request->currency_id)->value('amount');
+            $calcNetSalary['number_of_month'] = 12;
+            
+            if($amount_currency){
+                $salary_monthly = $request['salary'] * $amount_currency;
+
+                if($amount_currency){
+                    $salary_yaerly = $salary_monthly * $calcNetSalary['number_of_month'];
+                }else{
+                    $salary_yaerly = 0;
+                }
+            }else{
+                $salary_monthly = 0;
+            }
+
+            $calcNetSalary['currency_id'] =  $request->currency_id;
+            $calcNetSalary['salary'] =  $request->salary;
+            $calcNetSalary['calc_salary_month'] =  $salary_monthly;
+            $calcNetSalary['calc_salary_year'] =  $salary_yaerly;
+            $calcNetSalary['monthly_expenses'] =  $request->monthly_expenses;
+            $calcNetSalary['annual_requirements'] =  $request->annual_requirements;
+            $calcNetSalary['insurance_amount'] =  $request->insurance_amount;
+            $calcNetSalary['net_salary'] =  $salary_yaerly - ($request->annual_requirements + $request->insurance_amount
+            +($request->monthly_expenses * $calcNetSalary['number_of_month']));
+
+
+
+
+
+            
+            $calcNetSalary->save();
+            DB::commit();
+            return redirect()->route('dashboard.calcNetSalary.index')->with('success','تم أضافة المرتب بنجاح');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما: ' . $ex->getMessage()])->withInput();
+
+        }
     }
 
     /**
