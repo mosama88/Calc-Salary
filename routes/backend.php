@@ -34,6 +34,10 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('dashboard.
     Route::get('currencies',[CurrencyController::class,'index'])->name('currencies.index');
     Route::get('currencies/create',[CurrencyController::class,'create'])->name('currencies.create');
     Route::post('currencies/store',[CurrencyController::class,'store'])->name('currencies.store');
+    Route::get('currencies/edit/{id}',[CurrencyController::class,'edit'])->name('currencies.edit');
+    Route::put('currencies/update/{id}',[CurrencyController::class,'update'])->name('currencies.update');
+    Route::delete('currencies/destroy/{id}',[CurrencyController::class,'destroy'])->name('currencies.destroy');
+
 });
 
 

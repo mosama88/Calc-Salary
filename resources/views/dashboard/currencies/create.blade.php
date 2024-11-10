@@ -25,7 +25,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">أسم العملة</label>
-                            <input class="form-control" name="name" type="text" placeholder="Default input">
+                            <input class="form-control" name="name" type="text" placeholder="أكتب أسم العملة">
                             @error('name')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}
@@ -34,8 +34,8 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="">وصف العملة</label>
-                            <input class="form-control" name="description" type="text" placeholder="Default input">
-                            @error('name')
+                            <input class="form-control" name="description" type="text" placeholder="وصف العملة">
+                            @error('description')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}
                                 </div>
@@ -43,10 +43,10 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="">قيمة العملة</label>
+                            <label for="">قيمة العملة بالمصرى</label>
                             <input class="form-control" oninput="this.value=this.value.replace(/[^0-9.]/g,'');"
-                                name="amount" type="text" placeholder="Default input">
-                            @error('name')
+                                name="amount" type="text" placeholder="0.00">
+                            @error('amount')
                                 <div class="alert alert-danger" role="alert">
                                     {{ $message }}
                                 </div>

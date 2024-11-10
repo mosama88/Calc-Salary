@@ -27,4 +27,16 @@ class CurrencyRequest extends FormRequest
             'amount'=>'required|max:10',
         ];
     }
+
+    public function messages():array{
+        return[
+           'name.required' => "يرجى كتابة اسم العملة",
+            'name.max' => "اسم العملة يجب ألا يزيد عن الحد 50 المسموح",
+            'description.required' => "يرجى كتابة وصف للعملة",
+            'description.max' => "الوصف يجب ألا يزيد عن الحد 150 المسموح",
+            'amount.required' => "يرجى كتابة قيمة المبلغ",
+            'amount.max' => "قيمة المبلغ يجب ألا تزيد عن الحد 10 المسموح",
+
+        ];
+    }
 }

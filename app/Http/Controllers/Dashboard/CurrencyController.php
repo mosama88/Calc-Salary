@@ -29,4 +29,30 @@ class CurrencyController extends Controller
         return redirect()->route('dashboard.currencies.index')->with('success','تم أضافة العملة بنجاح');
         
     }
+
+    public function edit($id){
+        $currencyUpdate = Currency::findOrFail($id);
+        return view('dashboard.currencies.edit',compact('currencyUpdate'));
+    }
+
+
+    public function update(CurrencyRequest $request,$id){
+        $currencyUpdate = Currency::findOrFail($id);
+        $currencyUpdate['name'] = $request->name;
+        $currencyUpdate['description'] = $request->description;
+        $currencyUpdate['amount'] = $request->amount;
+        $currencyUpdate->save();
+        return redirect()->route('dashboard.currencies.index')->with('success','تم تعديل العملة بنجاح');
+
+
+    }
+
+
+    public function destroy($id){
+        $currencyDelete = Currency::findOrFail($id);
+        $currencyDelete->delete();
+        return redirect()->route('dashboard.currencies.index')->with('success','تم حذف العملة بنجاح');
+
+    }
+    
     }
