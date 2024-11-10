@@ -65,11 +65,6 @@ class calcNetSalaryController extends Controller
             $calcNetSalary['net_salary'] =  $salary_yaerly - ($request->annual_requirements + $request->insurance_amount
             +($request->monthly_expenses * $calcNetSalary['number_of_month']));
 
-
-
-
-
-            
             $calcNetSalary->save();
             DB::commit();
             return redirect()->route('dashboard.calcNetSalary.index')->with('success','تم أضافة المرتب بنجاح');
@@ -91,17 +86,56 @@ class calcNetSalaryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit( $id)
     {
-        //
+        $data = CalcNetSalary::findOrFail($id);
+        $other['currencies'] = Currency::orderBy('id','DESC')->get();
+        return view('dashboard.calcNetSalaries.edit',['other'=>$other,'data'=>$data]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try{
+            DB::beginTransaction();
+            
+            $calcNetSalaryUpdate = CalcNetSalary::findOrFail($id);
+            
+            $amount_currency = Currency::where('id',$request->currency_id)->value('amount');
+            $calcNetSalaryUpdate['number_of_month'] = 12;
+            
+            if($amount_currency){
+                $salary_monthly = $request['salary'] * $amount_currency;
+
+                if($amount_currency){
+                    $salary_yaerly = $salary_monthly * $calcNetSalaryUpdate['number_of_month'];
+                }else{
+                    $salary_yaerly = 0;
+                }
+            }else{
+                $salary_monthly = 0;
+            }
+
+            $calcNetSalaryUpdate['currency_id'] =  $request->currency_id;
+            $calcNetSalaryUpdate['salary'] =  $request->salary;
+            $calcNetSalaryUpdate['calc_salary_month'] =  $salary_monthly;
+            $calcNetSalaryUpdate['calc_salary_year'] =  $salary_yaerly;
+            $calcNetSalaryUpdate['monthly_expenses'] =  $request->monthly_expenses;
+            $calcNetSalaryUpdate['annual_requirements'] =  $request->annual_requirements;
+            $calcNetSalaryUpdate['insurance_amount'] =  $request->insurance_amount;
+            $calcNetSalaryUpdate['net_salary'] =  $salary_yaerly - ($request->annual_requirements + $request->insurance_amount
+            +($request->monthly_expenses * $calcNetSalaryUpdate['number_of_month']));
+
+            $calcNetSalaryUpdate->save();
+            DB::commit();
+            return redirect()->route('dashboard.calcNetSalary.index')->with('success','تم تعديل المرتب بنجاح');
+        }catch(\Exception $ex){
+            DB::rollback();
+            return redirect()->back()->withErrors(['error' => 'عفوآ لقد حدث خطأ ما: ' . $ex->getMessage()])->withInput();
+
+        }
     }
 
     /**
@@ -109,6 +143,9 @@ class calcNetSalaryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $calcNetSalaryDelete = CalcNetSalary::findOrFail($id);
+        $calcNetSalaryDelete->delete();
+        return redirect()->route('dashboard.calcNetSalary.index')->with('success','تم حذف المرتب بنجاح');
+
     }
 }

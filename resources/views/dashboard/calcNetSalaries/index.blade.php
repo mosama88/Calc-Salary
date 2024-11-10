@@ -70,7 +70,7 @@
                                             <div class="dropdown-menu" role="menu" x-placement="top-start"
                                                 style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-1px, -165px, 0px);">
                                                 <a class="dropdown-item"
-                                                    href="{{ route('dashboard.currencies.edit', $info['id']) }}"><i
+                                                    href="{{ route('dashboard.calcNetSalary.edit', $info['id']) }}"><i
                                                         class="fas fa-edit ml-2"></i>
                                                     تعديل</a>
                                                 <a class="dropdown-item modal-effect btn btn-sm" data-effect="effect-scale"
@@ -78,7 +78,7 @@
                                                     <i class="fas fa-trash-alt ml-1"></i>حذف</a>
                                             </div>
                                         </div>
-                                        @include('dashboard.currencies.delete')
+                                        @include('dashboard.calcNetSalaries.delete')
                                     </td>
 
                                 </tr>
