@@ -1,10 +1,10 @@
 @extends('dashboard.layouts.master')
-@section('admin_title', 'حساب العملات')
+@section('admin_title', 'حساب صافى المرتب')
 @section('css')
 @endsection
 @section('active-calcNetSalary', 'active')
-@section('page-header', 'جدول العملات')
-@section('page-header_desc', 'جدول العملات')
+@section('page-header', 'جدول صافى المرتب')
+@section('page-header_desc', 'جدول صافى المرتب')
 @section('page-header_link')
     <li class="breadcrumb-item"><a href="{{ url('/') }}">لوحة التحكم</a></li>
 @endsection
@@ -22,11 +22,11 @@
             {{-- Content --}}
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">جدول العملات</h3>
+                    <h3 class="card-title">جدول صافى المرتب</h3>
                 </div>
                 <div class="card-header">
-                    <a type="button" href="{{ route('dashboard.currencies.create') }}"
-                        class="btn btn-md btn-primary btn-flat"><i class="fas fa-plus ml-2"></i> أضافة عملة جديده</a>
+                    <a type="button" href="{{ route('dashboard.calcNetSalary.create') }}"
+                        class="btn btn-md btn-primary btn-flat"><i class="fas fa-plus ml-2"></i> أضافة مرتب جديد</a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">

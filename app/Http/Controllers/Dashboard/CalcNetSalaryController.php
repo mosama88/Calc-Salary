@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Models\CalcNetSalary;
 use App\Http\Controllers\Controller;
@@ -23,7 +24,8 @@ class calcNetSalaryController extends Controller
      */
     public function create()
     {
-        //
+        $other['currencies'] = Currency::get();
+        return view('dashboard.calcNetSalaries.create',['other'=>$other]);
     }
 
     /**
